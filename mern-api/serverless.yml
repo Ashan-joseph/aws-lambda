@@ -1,0 +1,75 @@
+org: ashan123
+app: aws-node-project
+service: mern-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  apiGateway:
+    apiKeys:
+      - First-Api-Key
+  environment:
+    MONGO_URI: mongodb+srv://lambda:hbcjksbdcvbsdvjhb@sandbox.vywmr.mongodb.net/mernapp?retryWrites=true&w=majority
+
+functions:
+  getGoals:
+    handler: controllers/goalController.getGoals
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/goals/{id}
+          method: get
+          cors: true 
+          private: true     
+  createGoals:
+    handler: controllers/goalController.createGoal
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/goals
+          method: post
+          cors: true
+          private: true     
+  updateGoals:
+    handler: controllers/goalController.updateGoal
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/goals/{id}
+          method: put
+          cors: true
+          private: true     
+  deleteGoals:
+    handler: controllers/goalController.deleteGoal
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/goals/{id}
+          method: delete
+          cors: true
+          private: true     
+  registerUser:
+    handler: controllers/userController.registerUser
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/users
+          method: post
+          cors: true
+          private: true 
+  loginUser:
+    handler: controllers/userController.loginUser
+    layers:
+      - arn:aws:lambda:us-east-1:778805528042:layer:db:4
+    events:
+      - http:
+          path: api/users/login
+          method: post
+          cors: true
+          private: true    
